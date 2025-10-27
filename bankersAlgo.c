@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 void bankersAlgorithm(int allocation[], int maxNeed[], int available[], int n, int m, int total[]) {
-    int need[n][m];
+    int need[n * m];
     bool finish[n];
     int safeSeq[n];
     int count = 0;
@@ -12,7 +12,7 @@ void bankersAlgorithm(int allocation[], int maxNeed[], int available[], int n, i
     // Calculate Need matrix
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-            need[i][j] = maxNeed[i * m + j] - allocation[i * m + j];
+            need[i * m + j] = maxNeed[i * m + j] - allocation[i * m + j];
         }
         finish[i] = false;
     }
@@ -23,8 +23,7 @@ void bankersAlgorithm(int allocation[], int maxNeed[], int available[], int n, i
             if (!finish[p]) {
                 int j;
                 for (j = 0; j < m; j++) {
-                    if (need[p][j] > available[j])
-                        break;
+                    if (need[p * m + j] > available[j]) break;
                 }
 
                 if (j == m) {
